@@ -1,0 +1,161 @@
+<html ng-app="app">
+
+<head>
+
+	<title>Marian en Raf Huwelijksreis</title>
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" />
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.min.js"></script>
+
+	
+	<script src="/resources/js/ui-bootstrap-tpls-0.10.0.js"></script>
+	
+	<script>
+		var controller = angular.module('app', ['ui.bootstrap']).controller('controller', function($scope, $http) {
+			$scope.kilometers = 0;
+			$scope.amount = 0;
+
+			$scope.$watch('kilometers', function(newValue, oldValue) {
+				$scope.amount = 3 * newValue;
+			});
+
+			$scope.$watch('amount', function(newValue, oldValue) {
+				$scope.kilometers = newValue / 3;
+			});
+//			$scope.currentPercentage = 12;
+
+            $http.get('/total').then(function(response) {
+                $scope.currentPercentage = response.data / 90;
+            });
+
+			$scope.getAdditionalPercentage = function () {
+				return Math.min($scope.kilometers / 30, 100 - $scope.currentPercentage);
+			}
+			$scope.getTotalPercentageRounded = function() {
+				// console.log(Math.floor(Math.abs($scope.currentPercentage + getTotalPercentageRounded/5)));
+//				console.log("current: " + $scope.currentPercentage);
+//				console.log("additional: " + $scope.getAdditionalPercentage());
+//				console.log( Math.floor(Math.abs(($scope.currentPercentage + $scope.getAdditionalPercentage() ) / 5)  ) * 5);
+				return Math.floor(Math.abs(($scope.currentPercentage + $scope.getAdditionalPercentage() ) / 5)  ) * 5;
+			}
+
+            $scope.submitPayment = function() {
+                var payment = {
+                    name: $scope.name,
+                    email: $scope.email,
+                    amount: $scope.amount
+
+                };
+
+                console.log(payment);
+
+                $http.put('/registerpayment', payment).then(function(response) {
+                    console.log(response);
+                });
+            };
+
+		});
+
+
+
+
+	</script>
+
+	<style>
+	.progress-bar-success {
+		background: url('/resources/img/zebra.png');
+		
+	}
+
+	</style>
+
+</head>
+
+<body style="background: url('/resources/img/springbok-lowres.png'); background-size: cover; background-repeat: no-repeat; color: whitesmoke;" ng-controller="controller">
+
+	<div style="background: rgba(0,0,0,0.1); width: 960px; margin-left: auto; margin-right: auto; margin-top: 20px; padding: 15px;" id="container">
+		<h1 style="">Stuur Marian en Raf naar Zuid-Afrika</h1>
+
+		<div class="row">
+			<div class="col-xs-12" style="font-weight: bold;">
+				Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+
+
+			</div>
+
+		</div>
+
+		<div class="row" >
+			<div class="col-xs-12" style="margin-top: 10px;">
+			<label >Afstand afgelegd:</label>
+			
+			<!-- <progressbar type="success" value="55" value-plus="10"></progressbar> -->
+			<progress>
+				<bar value="currentPercentage" type="success"></bar>
+				<bar value="getAdditionalPercentage()" type="danger"></bar>
+			</progress>
+
+<!-- 3000km -->
+
+<!-- 			<div class="progress">
+				<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="12" aria-valuemin="0" aria-valuemax="100" style="width: 12%">
+
+				</div>
+				<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100" style="width: 1%;">
+				</div>
+			</div> -->
+		</div>
+		</div>
+		<div class="row"> 
+
+
+
+			<div id="sidebar" class="col-xs-3" style="padding-top: 15px;">
+				<form role="form">
+					<div class="form-group">
+						<label for="naamInput">Naam / Namen</label>
+						<input type="text" class="form-control" id="naamInput" ng-required="true" ng-model="name" placeholder="Naam / Namen" />
+					</div>
+
+					<div class="form-group">
+						<label for="exampleInputEmail1">Email</label>
+						<input type="email" class="form-control" id="exampleInputEmail1" ng-required="true" ng-model="email" placeholder="Email" />
+					</div>
+
+					<div class="form-group">
+						<label for="kilometersInput">Kilometers</label>
+						<input ng-model="kilometers" class="form-control" id="kilometersInput" placeholder="Kilometers" />
+					</div>
+
+					<div class="form-group">
+						<label for="bedragInput">Bedrag</label>
+						<input type="number" class="form-control" id="bedragInput" ng-model="amount" placeholder="Kilometers" />
+					</div>					
+
+
+		  <!-- <div class="form-group">
+		    <label for="exampleInputPassword1">Password</label>
+		    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+		</div> -->
+
+
+		<button class="btn btn-default" ng-click="submitPayment()">Bevestig</button>
+	</form>
+
+
+</div>		
+
+<div style="height: 100%;margin-left: -1px; padding-top: 15px;" class="col-xs-9" >
+
+<img class="img-rounded" style="box-shadow: 0px 0px 10px 4px rgba(119, 119, 119, 0.4);
+-moz-box-shadow: 0px 0px 10px 4px rgba(119, 119, 119, 0.4);
+-webkit-box-shadow: 0px 0px 10px 4px rgba(119, 119, 119, 0.4);" src="/resources/img/kaartje-base.png" />
+
+<img ng-src="/resources/img/kaartje-{{getTotalPercentageRounded()}}.png" style="position: absolute; top: 15px; left: 15px;"/>
+</div>
+
+</div>
+</div>
+
+</body>
+
+</html>

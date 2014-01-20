@@ -258,7 +258,7 @@
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.1.1</version>
                 <configuration>
-                    <warName>reistracker-1.0-SNAPSHOT</warName>
+                    <warName>reistracker</warName>
                 </configuration>
             </plugin>
             <plugin>

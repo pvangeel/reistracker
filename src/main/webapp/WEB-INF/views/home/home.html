@@ -10,7 +10,7 @@
 	<script src="resources/js/ui-bootstrap-tpls-0.10.0.js"></script>
 	
 	<script>
-		var controller = angular.module('app', ['ui.bootstrap']).controller('controller', function($scope, $http) {
+		var controller = angular.module('app', ['ui.bootstrap']).controller('controller', function($scope, $http, $window) {
 			$scope.kilometers = 0;
 			$scope.amount = 0;
 
@@ -50,6 +50,7 @@
 
                 $http.put('registerpayment', payment).then(function(response) {
                     console.log(response);
+                    $window.location.reload();
                 });
             };
 

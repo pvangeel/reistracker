@@ -15,7 +15,7 @@ public class PaymentRepository {
     private EntityManager entityManager;
 
     public double getTotalAmountPayed() {
-        TypedQuery<Double> query = entityManager.createQuery("select SUM(p.amount) from Payment p where p.approved = true", Double.class);
+        TypedQuery<Double> query = entityManager.createQuery("select coalesce(SUM(p.amount), 0) from Payment p where p.approved = true", Double.class);
         return query.getSingleResult();
     }
 

@@ -7,7 +7,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.min.js"></script>
 
 	
-	<script src="/resources/js/ui-bootstrap-tpls-0.10.0.js"></script>
+	<script src="resources/js/ui-bootstrap-tpls-0.10.0.js"></script>
 	
 	<script>
 		var controller = angular.module('app', ['ui.bootstrap']).controller('controller', function($scope, $http) {
@@ -23,7 +23,7 @@
 			});
 //			$scope.currentPercentage = 12;
 
-            $http.get('/total').then(function(response) {
+            $http.get('total').then(function(response) {
                 $scope.currentPercentage = response.data / 90;
             });
 
@@ -48,7 +48,7 @@
 
                 console.log(payment);
 
-                $http.put('/registerpayment', payment).then(function(response) {
+                $http.put('registerpayment', payment).then(function(response) {
                     console.log(response);
                 });
             };
@@ -62,7 +62,7 @@
 
 	<style>
 	.progress-bar-success {
-		background: url('/resources/img/zebra.png');
+		background: url('resources/img/zebra.png');
 		
 	}
 
@@ -70,7 +70,7 @@
 
 </head>
 
-<body style="background: url('/resources/img/springbok-lowres.png'); background-size: cover; background-repeat: no-repeat; color: whitesmoke;" ng-controller="controller">
+<body style="background: url('resources/img/springbok-lowres.png'); background-size: cover; background-repeat: no-repeat; color: whitesmoke;" ng-controller="controller">
 
 	<div style="background: rgba(0,0,0,0.1); width: 960px; margin-left: auto; margin-right: auto; margin-top: 20px; padding: 15px;" id="container">
 		<h1 style="">Stuur Marian en Raf naar Zuid-Afrika</h1>
@@ -148,9 +148,9 @@
 
 <img class="img-rounded" style="box-shadow: 0px 0px 10px 4px rgba(119, 119, 119, 0.4);
 -moz-box-shadow: 0px 0px 10px 4px rgba(119, 119, 119, 0.4);
--webkit-box-shadow: 0px 0px 10px 4px rgba(119, 119, 119, 0.4);" src="/resources/img/kaartje-base.png" />
+-webkit-box-shadow: 0px 0px 10px 4px rgba(119, 119, 119, 0.4);" src="resources/img/kaartje-base.png" />
 
-<img ng-src="/resources/img/kaartje-{{getTotalPercentageRounded()}}.png" style="position: absolute; top: 15px; left: 15px;"/>
+<img ng-src="resources/img/kaartje-{{getTotalPercentageRounded()}}.png" style="position: absolute; top: 15px; left: 15px;"/>
 </div>
 
 </div>

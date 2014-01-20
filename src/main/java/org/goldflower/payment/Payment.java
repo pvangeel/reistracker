@@ -15,6 +15,9 @@ public class Payment {
     private String name;
     private String email;
     private double amount;
+    private Date paymentDate = new Date();
+    private boolean approved = true;
+    private String approvedBy = "System";
 
     public Payment() {}
 
@@ -35,10 +38,8 @@ public class Payment {
     public void setAmount(double amount) {
         this.amount = amount;
     }
-    private Date paymentDate = new Date();
 
 
-    private boolean approved = true;
 
     public String getName() {
         return name;
@@ -54,5 +55,29 @@ public class Payment {
 
     public double getAmount() {
         return amount;
+    }
+
+    public boolean isApproved() {
+        return approved;
+    }
+
+    public void setApproved(boolean approved) {
+        this.approved = approved;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getApprovedBy() {
+        return approvedBy;
+    }
+
+    public void setApprovedBy(String approvedBy) {
+        this.approvedBy = approvedBy;
+    }
+
+    public Long getId() {
+        return id;
     }
 }

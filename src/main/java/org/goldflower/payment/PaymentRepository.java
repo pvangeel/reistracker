@@ -20,8 +20,19 @@ public class PaymentRepository {
     }
 
     @Transactional
-    public void persist(Payment payment) {
-        entityManager.persist(payment);
+    public Payment persist(Payment payment, String approvedBy) {
+        if(payment.getId() == null) {
+            entityManager.persist(payment);
+            return payment;
+        } else {
+            Payment paymentEntity = entityManager.find(Payment.class, payment.getId());
+            paymentEntity.setAmount(payment.getAmount());
+            paymentEntity.setApproved(payment.isApproved());
+            paymentEntity.setEmail(payment.getEmail());
+            paymentEntity.setName(payment.getName());
+            paymentEntity.setApprovedBy(approvedBy);
+            return paymentEntity;
+        }
     }
 
     public List<Payment> getAllPayments() {

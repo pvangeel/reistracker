@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
@@ -36,8 +37,14 @@ public class PaymentController {
 
     @RequestMapping(value = "registerpayment", method = RequestMethod.PUT)
     @ResponseStatus(value = HttpStatus.OK)
-    public void registerPayment(@RequestBody Payment payment) {
-        paymentRepository.persist(payment);
+    public ResponseEntity<Payment> registerPayment(@RequestBody Payment payment, Principal principal) {
+        payment = paymentRepository.persist(payment, principal.getName());
+        return new ResponseEntity<>(payment, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "admin", method = RequestMethod.GET)
+    public String admin() {
+        return "admin/admin";
     }
 
     @ExceptionHandler(Exception.class)

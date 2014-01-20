@@ -3,13 +3,14 @@
 <head>
 
 	<title>Marian en Raf Huwelijksreis</title>
-	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" />
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.min.js"></script>
 
-	
-	<script src="resources/js/ui-bootstrap-tpls-0.10.0.js"></script>
-	
-	<script>
+    <link rel="stylesheet" href="resources/css/bootstrap.min.css" />
+
+    <script src="resources/js/angular/angular.min.js"></script>
+
+    <script src="resources/js/ui-bootstrap-tpls-0.10.0.js"></script>
+
+    <script>
 		var controller = angular.module('app', ['ui.bootstrap']).controller('controller', function($scope, $http, $window) {
 			$scope.kilometers = 0;
 			$scope.amount = 0;
@@ -21,7 +22,6 @@
 			$scope.$watch('amount', function(newValue, oldValue) {
 				$scope.kilometers = newValue / 3;
 			});
-//			$scope.currentPercentage = 12;
 
             $http.get('total').then(function(response) {
                 $scope.currentPercentage = response.data / 90;
@@ -31,27 +31,22 @@
 				return Math.min($scope.kilometers / 30, 100 - $scope.currentPercentage);
 			}
 			$scope.getTotalPercentageRounded = function() {
-				// console.log(Math.floor(Math.abs($scope.currentPercentage + getTotalPercentageRounded/5)));
-//				console.log("current: " + $scope.currentPercentage);
-//				console.log("additional: " + $scope.getAdditionalPercentage());
-//				console.log( Math.floor(Math.abs(($scope.currentPercentage + $scope.getAdditionalPercentage() ) / 5)  ) * 5);
 				return Math.floor(Math.abs(($scope.currentPercentage + $scope.getAdditionalPercentage() ) / 5)  ) * 5;
 			}
 
-            $scope.submitPayment = function() {
+            $scope.submitPayment = function(form) {
                 var payment = {
                     name: $scope.name,
                     email: $scope.email,
                     amount: $scope.amount
 
                 };
-
-                console.log(payment);
-
-                $http.put('registerpayment', payment).then(function(response) {
-                    console.log(response);
-                    $window.location.reload();
-                });
+                if(form.$valid) {
+                    $http.put('registerpayment', payment).then(function(response) {
+                        console.log(response);
+                        $window.location.reload();
+                    });
+                }
             };
 
 		});
@@ -111,7 +106,7 @@
 
 
 			<div id="sidebar" class="col-xs-3" style="padding-top: 15px;">
-				<form role="form">
+				<form name="form">
 					<div class="form-group">
 						<label for="naamInput">Naam / Namen</label>
 						<input type="text" class="form-control" id="naamInput" ng-required="true" ng-model="name" placeholder="Naam / Namen" />
@@ -139,7 +134,7 @@
 		</div> -->
 
 
-		<button class="btn btn-default" ng-click="submitPayment()">Bevestig</button>
+		<button type="submit" class="btn btn-default" ng-click="submitPayment(form)">Bevestig</button>
 	</form>
 
 
@@ -151,7 +146,7 @@
 -moz-box-shadow: 0px 0px 10px 4px rgba(119, 119, 119, 0.4);
 -webkit-box-shadow: 0px 0px 10px 4px rgba(119, 119, 119, 0.4);" src="resources/img/kaartje-base.png" />
 
-<img ng-src="resources/img/kaartje-{{getTotalPercentageRounded()}}.png" style="position: absolute; top: 15px; left: 15px;"/>
+<img ng-if="getTotalPercentageRounded() > 0" ng-src="resources/img/kaartje-{{getTotalPercentageRounded()}}.png" style="position: absolute; top: 15px; left: 15px;"/>
 </div>
 
 </div>

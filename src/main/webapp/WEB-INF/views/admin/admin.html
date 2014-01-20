@@ -1,0 +1,56 @@
+<html ng-app="app">
+
+    <head>
+        <link rel="stylesheet" href="resources/css/bootstrap.min.css" />
+
+        <script src="resources/js/angular/angular.min.js"></script>
+
+
+        <script src="resources/js/ui-bootstrap-tpls-0.10.0.js"></script>
+
+        <script lang="javascript">
+            var controller = angular.module('app', ['ui.bootstrap']).controller('controller', function($scope, $http) {
+                $scope.payments = [];
+
+                $http.get('payment').then(function (response) {
+                    $scope.payments = response.data;
+                });
+
+                $scope.toggleApproved = function (payment) {
+                    $http.put('registerpayment', payment).then(function(response) {
+                        $scope.payments[$scope.payments.indexOf(payment)] = response.data;
+                    });
+                }
+
+
+            });
+
+        </script>
+    </head>
+
+    <body>
+
+
+    <div style="width: 960px; margin-left: auto; margin-right: auto;" ng-controller="controller">
+        <h1>Administration</h1>
+        <table class="table table-striped table-hover table-condensed">
+            <th>Name</th>
+            <th>Email</th>
+            <th>Amount</th>
+            <th>Date</th>
+            <th>Approved</th>
+            <th>Approved By</th>
+            <tr ng-repeat="payment in payments">
+                <td>{{payment.name}}</td>
+                <td>{{payment.email}}</td>
+                <td>{{payment.amount}}</td>
+                <td>{{payment.paymentDate | date:'medium'}}</td>
+                <td><div class="checkbox"><input type="checkbox" ng-model="payment.approved" ng-change="toggleApproved(payment)"/></div></td>
+                <td>{{payment.approvedBy}}</td>
+            </tr>
+        </table>
+
+    </div>
+
+    </body>
+</html>

@@ -5,6 +5,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.StandardPasswordEncoder;
 
 import org.goldflower.account.UserService;
+import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
 
 @Configuration
 @ImportResource(value = "classpath:spring-security-context.xml")
@@ -15,10 +16,10 @@ class SecurityConfig {
 		return new UserService();
 	}
 //
-//	@Bean
-//	public TokenBasedRememberMeServices rememberMeServices() {
-//		return new TokenBasedRememberMeServices("remember-me-key", userService());
-//	}
+	@Bean
+	public TokenBasedRememberMeServices rememberMeServices() {
+		return new TokenBasedRememberMeServices("remember-me-key", userService());
+	}
 	
 	@Bean
 	public PasswordEncoder passwordEncoder() {

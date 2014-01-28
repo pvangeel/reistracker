@@ -93,7 +93,7 @@
         }
 
         label {
-            text-shadow: 0 0 1px grey;
+            text-shadow: 0 0 1px black;
         }
 
     </style>
@@ -105,10 +105,10 @@
 
 <div style="background: rgba(0,0,0,0.1); width: 960px; margin-left: auto; margin-right: auto; margin-top: 20px; padding: 15px;"
      id="container">
-    <h1 style="text-shadow: 0 0 1px grey;">Stuur Marian en Raf naar Zuid-Afrika</h1>
+    <h1 style="text-shadow: 0 0 1px black;">Stuur Marian en Raf naar Zuid-Afrika</h1>
 
     <div class="row">
-        <div class="col-xs-12" style="font-weight: bold; text-shadow: 0 0 1px grey;" ng-if="!paymentDone">
+        <div class="col-xs-12" style="font-weight: bold; text-shadow: 0 0 1px black;" ng-if="!paymentDone">
             Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
             industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
             scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into
@@ -118,9 +118,10 @@
 
 
         </div>
-        <div class="col-xs-12" style="font-weight: bold; text-shadow: 0 0 1px grey;" ng-if="paymentDone">
+        <div class="col-xs-12" style="font-weight: bold; text-shadow: 0 0 1px black;" ng-if="paymentDone">
             Thanks for sponsoring our trip!<br />
-            Please make sure to get the {{amount}}EUR safely to us. An email with payment options should have been sent to {{email}}
+            Please make sure to get the {{amount}}EUR safely to us.<br/>
+            An email with payment options should have been sent to {{email}}
 
 
         </div>

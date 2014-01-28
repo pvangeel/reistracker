@@ -2432,7 +2432,7 @@ angular.module('ui.bootstrap.progressbar', ['ui.bootstrap.transition'])
     };
 
     this.getPercentage = function(value) {
-        return Math.round(100 * value / max);
+        return Math.round(10000 * value / max) / 100;
     };
 }])
 

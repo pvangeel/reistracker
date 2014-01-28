@@ -20,22 +20,23 @@ public class PaymentRepository {
     }
 
     @Transactional
-    public Payment persist(Payment payment, String approvedBy) {
-        if(payment.getId() == null) {
-            entityManager.persist(payment);
-            return payment;
-        } else {
-            Payment paymentEntity = entityManager.find(Payment.class, payment.getId());
-            paymentEntity.setAmount(payment.getAmount());
-            paymentEntity.setApproved(payment.isApproved());
-            paymentEntity.setEmail(payment.getEmail());
-            paymentEntity.setName(payment.getName());
-            paymentEntity.setApprovedBy(approvedBy);
-            return paymentEntity;
-        }
+    public Payment persist(Payment payment) {
+        entityManager.persist(payment);
+        return payment;
     }
 
     public List<Payment> getAllPayments() {
         return entityManager.createQuery("select p from Payment p", Payment.class).getResultList();
+    }
+
+    @Transactional
+    public Payment update(Long id, Payment payment, String approvedBy) {
+        Payment paymentEntity = entityManager.find(Payment.class, id);
+        paymentEntity.setApprovedBy(approvedBy);
+        paymentEntity.setApproved(payment.isApproved());
+        paymentEntity.setAmount(payment.getAmount());
+        paymentEntity.setName(payment.getName());
+        payment.setEmail(payment.getEmail());
+        return paymentEntity;
     }
 }

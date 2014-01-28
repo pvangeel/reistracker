@@ -17,7 +17,7 @@
                 });
 
                 $scope.toggleApproved = function (payment) {
-                    $http.put('registerpayment', payment).then(function(response) {
+                    $http.put('payment/' + payment.id, payment).then(function(response) {
                         $scope.payments[$scope.payments.indexOf(payment)] = response.data;
                     });
                 }

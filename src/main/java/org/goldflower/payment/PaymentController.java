@@ -35,12 +35,20 @@ public class PaymentController {
         return paymentRepository.getAllPayments();
     }
 
-    @RequestMapping(value = "registerpayment", method = RequestMethod.PUT)
+    @RequestMapping(value = "payment", method = RequestMethod.PUT)
     @ResponseStatus(value = HttpStatus.OK)
     public ResponseEntity<Payment> registerPayment(@RequestBody Payment payment, Principal principal) {
-        payment = paymentRepository.persist(payment, principal.getName());
+        payment = paymentRepository.persist(payment);
         return new ResponseEntity<>(payment, HttpStatus.OK);
     }
+
+    @RequestMapping(value = "payment/{id}", method = RequestMethod.PUT)
+    @ResponseStatus(value = HttpStatus.OK)
+    public ResponseEntity<Payment> registerPayment(@RequestBody Payment payment, @PathVariable("id") Long id, Principal principal) {
+        payment = paymentRepository.update(id, payment, principal.getName());
+        return new ResponseEntity<>(payment, HttpStatus.OK);
+    }
+
 
     @RequestMapping(value = "admin", method = RequestMethod.GET)
     public String admin() {

@@ -1,5 +1,6 @@
 package org.goldflower.payment;
 
+import org.goldflower.mail.ConfirmationMailSender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ public class PaymentController {
     @Autowired
     private PaymentRepository paymentRepository;
 
+    @Autowired
+    private ConfirmationMailSender confirmationMailSender;
+
     @RequestMapping(value = "total", method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
@@ -39,6 +43,7 @@ public class PaymentController {
     @ResponseStatus(value = HttpStatus.OK)
     public ResponseEntity<Payment> registerPayment(@RequestBody Payment payment, Principal principal) {
         payment = paymentRepository.persist(payment);
+        confirmationMailSender.sendConfirmationMail(payment);
         return new ResponseEntity<>(payment, HttpStatus.OK);
     }
 

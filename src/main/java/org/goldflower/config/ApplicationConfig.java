@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
 
 import org.goldflower.Application;
@@ -18,7 +19,9 @@ class ApplicationConfig {
 	@Bean
 	public static PropertyPlaceholderConfigurer propertyPlaceholderConfigurer() {
 		PropertyPlaceholderConfigurer ppc = new PropertyPlaceholderConfigurer();
-		ppc.setLocation(new ClassPathResource("/persistence.properties"));
+        ppc.setIgnoreResourceNotFound(true);
+        ppc.setLocations(new Resource[] {new ClassPathResource("/persistence.properties"), new ClassPathResource("/local.properties")});
+//		ppc.setLocation(new ClassPathResource("/persistence.properties"));
 		return ppc;
 	}
 

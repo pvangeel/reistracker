@@ -1,13 +1,23 @@
 Beste ${names}
-Dear ${names}
 
-Nogmaals hartelijk bedankt voor jullie bijdrage. Het bedrag (${amount}EUR) kan worden overgemaakt op volgend rekeningnummer:
-
-Thank you again for your contribution to our honeymoon. Your donation can be transferred to the following account:
+Nogmaals hartelijk bedankt voor uw bijdrage. Het bedrag (${amount}EUR) kan worden overgemaakt op volgend rekeningnummer:
 
 Roelands - Crabbé
 BE84 7805 9104 5059
 
-Groetjes - Cheers
+
+Groetjes
+Raf en Marian
+
+
+Dear ${names}
+
+Thank you again for your contribution to our honeymoon. Your donation (${amount}EUR) can be transferred to the following account:
+
+Roelands - Crabbé
+BE84 7805 9104 5059
+
+
+Cheers
 Raf en Marian
 

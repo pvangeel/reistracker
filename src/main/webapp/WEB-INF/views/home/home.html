@@ -36,6 +36,9 @@
             }
 
             $scope.submitPayment = function (form) {
+                if($scope.submitButtonDisabled) {
+                    return;
+                }
                 var payment = {
                     name: $scope.name,
                     email: $scope.email,
@@ -113,19 +116,19 @@
                 Aangezien onze nood voor nieuwe potten en pannen vrij laag is en die aan romantische reizen hoog, is ons geschenk bij voorkeur
                 een duwtje in de rug richting Zuid-Afrika. In de linker kolom kunnen jullie ofwel een aantal kilometer ofwel
                 het bedrag dat jullie willen sponsoren aanduiden. Hierna zullen jullie op de kaart onze reis kunnen zien vorderen
-                en jullie bijdrage bevestigen. Vergeet zeker niet je email en je naam in te vullen!
+                en jullie bijdrage bevestigen.<br />Vergeet zeker niet je email en je naam in te vullen!
             </p>
 
             <p>
                 Since we don't need any new household items, but do have a need for a romantic honeymoon, we would prefer
                 a contribution that helps us on our way to South-Africa.  In the leftmost column you can indicate either the number of kilometers
                 or the amount of money you would like to donate. Subsequently you will be able to see our honeymoon advancing and will be able to
-                confirm your donation. Please don't forget to fill out the Name and Email Address fields!
+                confirm your donation.<br />Please don't forget to fill out the Name and Email Address fields!
             </p>
 
 
         </div>
-        <div class="col-xs-12" style="font-weight: bold; text-shadow: 0 0 1px black;" ng-if="paymentDone">
+        <div class="col-xs-12" style="font-weight: bold; text-shadow: 0 0 1px black; font-size: 1.5em;" ng-if="paymentDone">
             <p>
                 Hartelijk bedankt voor jullie bijdrage aan onze droomreis!
                 Er is een email met betalingsinformatie verstuurd naar het door jullie vermeldde adres.
@@ -142,7 +145,7 @@
 
     <div class="row">
         <div class="col-xs-12" style="margin-top: 10px;">
-            <label>Afstand afgelegd:</label>
+            <label>Afstand afgelegd / Distance travelled:</label>
 
             <!-- <progressbar type="success" value="55" value-plus="10"></progressbar> -->
             <progress>
@@ -161,15 +164,15 @@
                         </div> -->
         </div>
     </div>
-    <div class="row">
+    <div class="row" ng-show="!paymentDone">
 
 
         <div id="sidebar" class="col-xs-3" style="padding-top: 15px;">
-            <form name="form" ng-show="!paymentDone">
+            <form name="form">
                 <div class="form-group">
-                    <label for="naamInput">Naam / Namen</label>
+                    <label for="naamInput">Naam / Name</label>
                     <input type="text" class="form-control" id="naamInput" ng-required="true" ng-model="name"
-                           placeholder="Naam / Namen"/>
+                           placeholder="Naam / Name"/>
                 </div>
 
                 <div class="form-group">
@@ -181,16 +184,16 @@
                 <div class="form-group">
                     <label for="kilometersInput">Kilometers</label>
                     <input rounded-number="" type="number" ng-model="kilometers" step="any" class="form-control"
-                           id="kilometersInput" placeholder="Kilometers"/>
+                           id="kilometersInput" placeholder="Kilometers" min="0"/>
                 </div>
 
                 <div class="form-group">
-                    <label for="bedragInput">Bedrag</label>
+                    <label for="bedragInput">Bedrag / Amount</label>
                     <input rounded-number="" type="number" step="any" class="form-control" id="bedragInput"
-                           ng-model="amount" placeholder="Bedrag"/>
+                           ng-model="amount" placeholder="Bedrag / Amount" min="0"/>
                 </div>
 
-                <button type="submit" class="btn btn-default" ng-click="submitPayment(form)" ng-disabled="{{submitButtonDisabled}}">Bevestig</button>
+                <button type="submit" class="btn btn-default" ng-click="submitPayment(form)" ng-disabled="{{submitButtonDisabled}}">Bevestig / Confirm</button>
             </form>
 
 
@@ -207,6 +210,9 @@
                  style="position: absolute; top: 15px; left: 15px;"/>
         </div>
 
+    </div>
+    <div ng-show="paymentDone">
+        <img src="resources/img/thanks.jpg"/>
     </div>
 </div>
 
